@@ -1,0 +1,8 @@
+.imagen > img {
+    width: 100px;
+    height: 100px;
+}
+
+.contenedor {
+    display: flex;
+}
