@@ -14,7 +14,7 @@
     <?php
     include_once('includes/cabecera.inc.php');
     ?>
-
+    <main>
     <?php
     require_once('includes/functions.inc.php');
 
@@ -26,15 +26,6 @@
 
     [$cartasRepartidas, $cartas] = repartir([$jugador1, $jugador2], 10, $cartas);
 
-    //Muestras las cartas de cada jugador
-    foreach ($cartasRepartidas as $jugador) {
-        echo $jugador["nombre"] . ' ';
-        echo '<div class="contenedor">';
-        mostrarCartas($jugador);
-        echo '</div>';
-        echo '<br>';
-    }
-
     //Calcula los resultados
     $jugador1Resultado = 0;
     $jugador2Resultado = 0;
@@ -42,14 +33,27 @@
         switch ($cartasRepartidas[0]["mano"][$i]["valor"] <=> $cartasRepartidas[1]["mano"][$i]["valor"]) {
             case '1':
                 $jugador1Resultado++;
+                $cartasRepartidas[0]["mano"][$i]["resultado"] = "ganadora";
                 break;
             case '0':
                 $jugador1Resultado++ && $jugador2Resultado++;
+                $cartasRepartidas[0]["mano"][$i]["resultado"] = "empate";
+                $cartasRepartidas[1]["mano"][$i]["resultado"] = "empate";
                 break;
             case '-1':
                 $jugador2Resultado++;
+                $cartasRepartidas[1]["mano"][$i]["resultado"] = "ganadora";
                 break;
         }
+    }
+
+    //Muestras las cartas de cada jugador
+    foreach ($cartasRepartidas as $jugador) {
+        echo '<h2>'.$jugador["nombre"].'</h2>';
+        echo '<div class="contenedor">';
+        mostrarCartas($jugador);
+        echo '</div>';
+        echo '<br>';
     }
 
     //Muestra los resultados
@@ -68,6 +72,7 @@
     }
 
     ?>
+    </main>
 </body>
 
 </html>

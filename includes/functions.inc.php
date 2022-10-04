@@ -97,6 +97,11 @@ function sustituirFigurasBlackJack($jugador)
 function mostrarCartas($jugador)
 {
     foreach ($jugador["mano"] as $carta) {
-        echo '<div class="imagen"><img src="/img/baraja/' . $carta["imagen"] . '" alt="' . $carta["palo"] . '_' . $carta["valor"] . '"></div>';
+
+        if (isset($carta["resultado"])) {
+            echo '<div class="imagen '.$carta["resultado"].'"><img src="/img/baraja/' . $carta["imagen"] . '" alt="' . $carta["palo"] . '_' . $carta["valor"] . '"></div>';
+        } else {
+            echo '<div class="imagen"><img src="/img/baraja/' . $carta["imagen"] . '" alt="' . $carta["palo"] . '_' . $carta["valor"] . '"></div>';
+        }
     }
 }

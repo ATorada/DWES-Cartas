@@ -1,8 +1,65 @@
+@font-face {
+    font-family: "Fuente";
+    src: url("fonts/Rosario-Regular.ttf");
+}
+
+body {
+    font-family: "Fuente";
+    background-color: #f7d3eb;
+}
+
+main {
+    background-color: #FDEBF7;
+    text-align: center;
+    padding: 1%;
+    margin: 1%;
+    border-radius: 100px;
+}
+
+
 .imagen > img {
     width: 100px;
-    height: 100px;
+    height: 120px;
+    min-width: 10px;
+    min-height: 10px;
+}
+
+.imagen {
+    margin: 0.2%;
 }
 
 .contenedor {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+    border: 1px black solid;
+    width: auto;
+    height: auto;
 }
+
+.ganadora {
+    border: 5px greenyellow solid;
+}
+
+.empate {
+    border: 5px blue solid;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    display: inline;
+    float: left;
+  }
+
+a {
+    display: block;
+    padding: 8px;
+    background-color: #dddddd;
+  }

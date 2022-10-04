@@ -15,6 +15,7 @@
     include_once('includes/cabecera.inc.php');
     ?>
 
+    <main>
     <?php
     require_once('includes/functions.inc.php');
 
@@ -26,8 +27,8 @@
 
     //Calcula los resultados de cada jugador y los muestra
     foreach ($cartasRepartidas as $jugador) {
-        echo '<div class="contenedor">';
         echo $jugador["nombre"] . ' ';
+        echo '<div class="contenedor">';
 
         //Realiza una primera tanda de cálculo y luego roba el jugador
         $jugador = sustituirFigurasBlackJack($jugador);
@@ -39,8 +40,13 @@
             $tablaDePuntuaciones[$jugador["nombre"]] = calcularPuntosBlackJack($jugador);
         }
 
+/*         if (condition) {
+            $jugador["resultado"] =  "jugador";
+        } */
+
         mostrarCartas($jugador);
 
+        echo '</div>';
         if ($jugador["nombre"] !== "Banca") {
             if ($tablaDePuntuaciones[$jugador["nombre"]] <= 21) {
                 switch ($tablaDePuntuaciones[$jugador["nombre"]] <=> $tablaDePuntuaciones["Banca"]) {
@@ -55,11 +61,12 @@
                 echo '<p>Ha perdido</p>';
             }
         }
-        echo '</div>';
         echo '<br>';
     }
 
     ?>
+    </main>
+
 </body>
 
 </html>
