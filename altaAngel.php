@@ -16,78 +16,58 @@
     ?>
 
     <?php
-    include_once('includes/functions.inc.php');
+    require_once('includes/functions.inc.php');
 
-
-    $cartas = crearBaraja();
-
-    function alta($cartasRepartidas)
-    {
-        $jugador1 = 0;
-        $jugador2 = 0;
-        for ($i=0; $i < count($cartasRepartidas[0]["mano"]); $i++) { 
-                switch ($cartasRepartidas[0]["mano"][$i]["valor"] <=> $cartasRepartidas[1]["mano"][$i]["valor"]) {
-                    case '1':
-                        $jugador1++;
-                        break;
-                    case '0':
-                        $jugador1++ && $jugador2++;
-                        break;
-                    case '-1':
-                        $jugador2++;
-                        break;
-                }
-        }
-        return [$jugador1,$jugador2];
-    }
-
+    //Establece los jugadores, la baraja y reparte
     $jugador1 = "Ángel";
     $jugador2 = "Rubén";
 
+    $cartas = crearBaraja();
+
     [$cartasRepartidas, $cartas] = repartir([$jugador1, $jugador2], 10, $cartas);
 
-    [$jugador1Resultado,$jugador2Resultado] = alta($cartasRepartidas);
-
-    
+    //Muestras las cartas de cada jugador
     foreach ($cartasRepartidas as $jugador) {
-        echo $jugador["nombre"].' ';
+        echo $jugador["nombre"] . ' ';
         echo '<div class="contenedor">';
-        foreach ($jugador["mano"] as $carta) {
-            echo '<div class="imagen"><img src="/img/baraja/'.$carta["imagen"].'" alt="'.$carta["palo"].'_'.$carta["valor"].'"></div>';
-        }
+        mostrarCartas($jugador);
         echo '</div>';
-       echo '<br>';
-   }
+        echo '<br>';
+    }
 
-    echo $jugador1 . ' ha sacado '. $jugador1Resultado . ' puntos<br>';
-    echo $jugador2 . ' ha sacado '. $jugador2Resultado . ' puntos<br>';
-    /*        
-        foreach ($cartas as $carta) {
-           foreach ($carta as $dato => $info) {
-               echo $dato.' -> '.$info.'<br>';
-           }
-           echo '<br>';
-       } 
-       */
+    //Calcula los resultados
+    $jugador1Resultado = 0;
+    $jugador2Resultado = 0;
+    for ($i = 0; $i < count($cartasRepartidas[0]["mano"]); $i++) {
+        switch ($cartasRepartidas[0]["mano"][$i]["valor"] <=> $cartasRepartidas[1]["mano"][$i]["valor"]) {
+            case '1':
+                $jugador1Resultado++;
+                break;
+            case '0':
+                $jugador1Resultado++ && $jugador2Resultado++;
+                break;
+            case '-1':
+                $jugador2Resultado++;
+                break;
+        }
+    }
 
-
-         
-
-/*        foreach ($cartasRepartidas as $jugador => $cartas) {
-            echo $jugador.' ';
-            foreach ($cartas as $carta) {
-                foreach ($carta as $dato => $info) {
-                    echo $dato.' -> '.$info.'<br>';
-                }
-            }
-           echo '<br>';
-       }  */
-
-
+    //Muestra los resultados
+    echo $jugador1 . ' ha sacado ' . $jugador1Resultado . ' puntos<br>';
+    echo $jugador2 . ' ha sacado ' . $jugador2Resultado . ' puntos<br>';
+    switch ($jugador1Resultado <=> $jugador2Resultado) {
+        case '1':
+            echo $jugador1 . ' ha ganado.<br>';
+            break;
+        case '0':
+            echo $jugador1 . ' y ' . $jugador2 . ' han empatado.<br>';
+            break;
+        case '-1':
+            echo $jugador2 . ' ha ganado.<br>';
+            break;
+    }
 
     ?>
-
-    <div><img src="" alt=""></div>
 </body>
 
 </html>
