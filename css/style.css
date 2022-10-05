@@ -21,6 +21,16 @@ header {
     margin-top: 2%;
 }
 
+.portada {
+    margin: 3%;
+    display: flex;
+    justify-content: center;
+}
+
+.portada img {
+    border-radius: 100px;
+    border: 2px black solid;
+}
 
 h1 {
     text-align: center;
@@ -30,7 +40,7 @@ h2 {
     font-size: 1.3em;
 }
 
-.imagen > img {
+.imagen>img {
     width: 90px;
     height: 100px;
     min-width: 10px;
@@ -64,12 +74,19 @@ h2 {
 
 @media (max-width: 1000px) {
     .contenedor {
-      flex-direction: column;
+        flex-direction: column;
     }
-  }
+}
 
+@media (max-width: 1700px) {
+    .contenedorCartas {
+        flex-direction: column;
+    }
+}
 
-.ganadora, .empate, .pierde {
+.ganadora,
+.empate,
+.pierde {
     font-weight: bold;
 }
 

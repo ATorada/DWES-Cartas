@@ -1,3 +1,6 @@
+<?php
+require_once('includes/functions.inc.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -22,63 +25,42 @@
 
     <main>
         <?php
-        require_once('includes/functions.inc.php');
-
-        //Establece los jugadores, la baraja y reparte
+        //Establece los jugadores y la baraja para repartir
         $jugadores = ["Banca", "Jugador1", "Jugador2", "Jugador3", "Jugador4", "Jugador5",];
         $cartas = crearBaraja();
         [$cartasRepartidas, $cartas] = repartir($jugadores, 2, $cartas);
 
 
-        //Calcula los resultados de cada jugador y los muestra
-        $contenedorCreado = false;
+        //Crea un contenedor, calcula los puntos y muestra el resultado de la banca únicamente para separarla de los jugadores.
+        echo '<div class="contenedor">';
+
+        $banca = array_shift($cartasRepartidas);
+
+        $puntosBanca = calcularPuntosBlackjack($banca);
+
+        while ($puntosBanca <= 13) {
+            $banca["mano"][] = array_pop($cartas);
+            $puntosBanca = calcularPuntosBlackjack($banca);
+        }
+
+        mostrarResultadosBlackjack($banca, $puntosBanca);
+
+        echo '</div>';
+
+        //Crea un contenedor, calcula los puntos y muestra los resultados de los jugadores restantes.
+        echo '<div class="contenedor">';
+
         foreach ($cartasRepartidas as $jugador) {
 
-            //Crea un contenedor único para la banca y otro para todos los jugadores
-            if (!$contenedorCreado && $jugador["nombre"] !== "Banca") {
-                echo '<div class="contenedor">';
-                $contenedorCreado = true;
-            } elseif ($jugador["nombre"] == "Banca") {
-                echo '<div class="contenedor">';
+            $puntos = calcularPuntosBlackjack($jugador);
+
+            while ($puntos <= 13) {
+                $jugador["mano"][] = array_pop($cartas);
+                $puntos = calcularPuntosBlackJack($jugador);
             }
 
-            echo '<div class="contenedorJugador">';
-
-            echo $jugador["nombre"] . ' ';
-            echo '<div class="contenedorCartas">';
-
-            //Realiza una primera tanda de cálculo y luego roba el jugador
-            $tablaDePuntuaciones[$jugador["nombre"]] = calcularPuntosBlackJack($jugador);
-
-            while ($tablaDePuntuaciones[$jugador["nombre"]] <= 13) {
-                [$jugador, $cartas] = repartirUna($jugador, $cartas);
-                $tablaDePuntuaciones[$jugador["nombre"]] = calcularPuntosBlackJack($jugador);
-            }
-
-            mostrarCartas($jugador);
-
-            echo '</div>';
-            if ($jugador["nombre"] !== "Banca") {
-                if ($tablaDePuntuaciones[$jugador["nombre"]] <= 21) {
-                    switch ($tablaDePuntuaciones[$jugador["nombre"]] <=> $tablaDePuntuaciones["Banca"]) {
-                        case '1':
-                            echo '<p class="ganadora">¡GANA!</p>';
-                            break;
-                        case '0':
-                            echo '<p class="empate">Empatado</p>';
-                            break;
-                    }
-                } elseif ($tablaDePuntuaciones[$jugador["nombre"]] > 21) {
-                    echo '<p class="pierde">Pierde :(</p>';
-                }
-                echo $tablaDePuntuaciones[$jugador["nombre"]] . " puntos";;
-            } else {
-                echo $tablaDePuntuaciones[$jugador["nombre"]] . " puntos";;
-                echo '</div>';
-            }
-            echo '</div>';
+            mostrarResultadosBlackjack($jugador, $puntos, $puntosBanca);
         }
-        echo '</div>';
         echo '</div>';
 
         ?>

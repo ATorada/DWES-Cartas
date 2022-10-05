@@ -51,9 +51,9 @@ function crearBaraja()
  * @param int $cantidadCartas Cantidad de cartas que tendrá cada jugador.
  * @param array $cartas La baraja a utilizar.
  *    $cartas = [
- *          'palo'      => (string) Palo al que pertenece la carta. Opcional
- *          'valor'     => (string/int) Valor de la carta. Opcional
- *          'imagen'    => (string) Imagen asociada a la carta. Opcional
+ *          'palo'      => (string) Palo al que pertenece la carta. 
+ *          'valor'     => (string/int) Valor de la carta. 
+ *          'imagen'    => (string) Imagen asociada a la carta. 
  *    ]
  *
  * @return array Devuelve un array con las cartas restantes y un array con cada jugador y sus cartas.
@@ -68,36 +68,10 @@ function repartir(array $jugadores, int $cantidadCartas, array $cartas)
             if (!isset($cartasRepartidas[$j]["nombre"])) {
                 $cartasRepartidas[$j]["nombre"] = $jugadores[$j];
             }
-            [$cartasRepartidas[$j], $cartas] = repartirUna($cartasRepartidas[$j], $cartas);
+            $cartasRepartidas[$j]["mano"][] = array_pop($cartas);
         }
     }
     return [$cartasRepartidas, $cartas];
-}
-
-/**
- * Reparte al jugador la última carta de la baraja.
- * 
- * @param array $jugador Array del jugador, contiene su nombre y su mano.
- *    $jugador = [
- *      'nombre'   => (string) Nombre del jugador. Opcional
- *      'mano'     => [
- *          'palo'      => (string) Palo al que pertenece la carta. Opcional
- *          'valor'     => (string/int) Valor de la carta. Opcional
- *          'imagen'    => (string) Imagen asociada a la carta. Opcional
- *      ]
- *    ]
- * @param array $cartas La baraja a utilizar.
- *    $cartas = [
- *          'palo'      => (string) Palo al que pertenece la carta. Opcional
- *          'valor'     => (string/int) Valor de la carta. Opcional
- *          'imagen'    => (string) Imagen asociada a la carta. Opcional
- *    ]
- * @return array Devuelve un array con las cartas restantes y un array con el jugador y su mano.
- */
-function repartirUna(array $jugador, array $cartas)
-{
-    $jugador["mano"][] = array_pop($cartas);
-    return [$jugador, $cartas];
 }
 
 /**
@@ -107,9 +81,9 @@ function repartirUna(array $jugador, array $cartas)
  * @param mixed $valorNuevo El nuevo valor.
  * @param array $array El array donde se buscará y reemplazará el valor.
  *    $array = [
- *          'palo'      => (string) Palo al que pertenece la carta. Opcional
+ *          'palo'      => (string) Palo al que pertenece la carta. 
  *          'valor'     => (string/int) Valor de la carta.
- *          'imagen'    => (string) Imagen asociada a la carta. Opcional
+ *          'imagen'    => (string) Imagen asociada a la carta. 
  *    ]
  * 
  * @return array Devuelve el array resultante.
@@ -129,21 +103,21 @@ function sustituirValor($valorABuscar, $valorNuevo, array $array)
  * 
  * @param array $jugador El jugador y su mano.
  *    $jugador = [
- *      'nombre'   => (string) Nombre del jugador. Opcional
+ *      'nombre'   => (string) Nombre del jugador. 
  *      'mano'     => [
- *          'palo'      => (string) Palo al que pertenece la carta. Opcional
+ *          'palo'      => (string) Palo al que pertenece la carta. 
  *          'valor'     => (string/int) Valor de la carta.
- *          'imagen'    => (string) Imagen asociada a la carta. Opcional
+ *          'imagen'    => (string) Imagen asociada a la carta. 
  *      ]
  *    ]
  * 
  * @return int Devuelve los puntos de ese jugador.
  */
-function calcularPuntosBlackJack(array $jugador)
+function calcularPuntosBlackjack(array $jugador)
 {
     $puntos = 0;
 
-    $jugador = sustituirFigurasBlackJack($jugador);
+    $jugador = sustituirFigurasBlackjack($jugador);
 
     $asEncontrado = false;
     for ($i = 0; $i < count($jugador["mano"]); $i++) {
@@ -163,16 +137,16 @@ function calcularPuntosBlackJack(array $jugador)
  * 
  * @param array $jugador El jugador al que se le van a sustituir las figuras.
  *    $jugador = [
- *      'nombre'   => (string) Nombre del jugador. Opcional
+ *      'nombre'   => (string) Nombre del jugador. 
  *      'mano'     => [
- *          'palo'      => (string) Palo al que pertenece la carta. Opcional
+ *          'palo'      => (string) Palo al que pertenece la carta. 
  *          'valor'     => (string/int) Valor de la carta.
- *          'imagen'    => (string) Imagen asociada a la carta. Opcional
+ *          'imagen'    => (string) Imagen asociada a la carta. 
  *      ]
  *    ]
  * @return array Devuelve el jugador con la mano cambiada.
  */
-function sustituirFigurasBlackJack(array $jugador)
+function sustituirFigurasBlackjack(array $jugador)
 {
     $jugador["mano"] = sustituirValor("j", 10, $jugador["mano"]);
     $jugador["mano"] = sustituirValor("k", 10, $jugador["mano"]);
@@ -181,11 +155,11 @@ function sustituirFigurasBlackJack(array $jugador)
 }
 
 /**
- * Se encarda de mostrar las cartas de un jugador.
+ * Se encarga de mostrar las cartas de un jugador.
  * 
  * @param array $jugador El jugador al que se le van a mostrar las cartas.
  *    $jugador = [
- *      'nombre'   => (string) Nombre del jugador. Opcional
+ *      'nombre'   => (string) Nombre del jugador.
  *      'mano'     => [
  *          'palo'      => (string) Palo al que pertenece la carta.
  *          'valor'     => (string/int) Valor de la carta.
@@ -195,6 +169,7 @@ function sustituirFigurasBlackJack(array $jugador)
  */
 function mostrarCartas(array $jugador)
 {
+    echo '<div class="contenedorCartas">';
     foreach ($jugador["mano"] as $carta) {
 
         if (isset($carta["resultado"])) {
@@ -203,4 +178,50 @@ function mostrarCartas(array $jugador)
             echo '<div class="imagen"><img src="/img/baraja/' . $carta["imagen"] . '" alt="' . $carta["palo"] . '_' . $carta["valor"] . '"></div>';
         }
     }
+    echo '</div>';
+}
+
+/**
+ * Se encarga de mostrar los resultados de un jugador del Blackjack.
+ * 
+ * @param array $jugador El jugador al que se le van a mostrar las cartas.
+ *    $jugador = [
+ *      'nombre'   => (string) Nombre del jugador.
+ *      'mano'     => [
+ *          'palo'      => (string) Palo al que pertenece la carta.
+ *          'valor'     => (string/int) Valor de la carta.
+ *          'imagen'    => (string) Imagen asociada a la carta.
+ *      ]
+ *    ]
+ * @param int $puntos Los puntos del jugador.
+ * 
+ * @param int $banca Los puntos de la banca.
+ */
+function mostrarResultadosBlackjack(array $jugador, int $puntos, int $banca = 0)
+{
+    echo '<div class="contenedorJugador">';
+
+    echo $jugador["nombre"] . ' ';
+
+    mostrarCartas($jugador);
+
+    if ($puntos > 21) {
+        echo '<p class="pierde">Pierde :(</p>';
+    } elseif ($puntos <= 21 && $jugador["nombre"] !== "Banca") {
+        if ($puntos <= 21 && $banca > 21) {
+            echo '<p class="ganadora">¡GANA!</p>';
+        } else {
+            switch ($puntos <=> $banca) {
+                case '1':
+                    echo '<p class="ganadora">¡GANA!</p>';
+                    break;
+                case '0':
+                    echo '<p class="empate">Empatado</p>';
+                    break;
+            }
+        }
+    }
+    echo $puntos . " puntos";
+
+    echo '</div>';
 }

@@ -1,3 +1,7 @@
+<?php
+require_once('includes/functions.inc.php');
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -19,12 +23,11 @@
     <?php
     include_once('includes/cabecera.inc.php');
     ?>
-
+    
     <main>
         <?php
-        require_once('includes/functions.inc.php');
 
-        //Establece los jugadores, la baraja y reparte
+        //Establece los jugadores y crea la baraja para repartir
         $jugador1 = "Ángel";
         $jugador2 = "Rubén";
 
@@ -32,7 +35,7 @@
 
         [$cartasRepartidas, $cartas] = repartir([$jugador1, $jugador2], 10, $cartas);
 
-        //Calcula los resultados
+        //Se realiza un bucle para comparar la mano de ambos jugadores y obtener sus puntos
         $jugador1Resultado = 0;
         $jugador2Resultado = 0;
         for ($i = 0; $i < count($cartasRepartidas[0]["mano"]); $i++) {
@@ -53,17 +56,15 @@
             }
         }
 
-        //Muestras las cartas de cada jugador
+        //Se recorre cada jugador para mostrar sus cartas
         foreach ($cartasRepartidas as $jugador) {
             echo '<div class="contenedorJugador">';
             echo '  <h2>' . $jugador["nombre"] . '</h2>';
-            echo '  <div class="contenedorCartas">';
             mostrarCartas($jugador);
-            echo '  </div>';
             echo '</div>';
         }
 
-        //Muestra los resultados
+        //Se muestran los puntos de cada jugador y luego se comparan para obtener un ganador
         echo '<b>' . $jugador1 . '</b>' . ' ha sacado ' . '<b>' . $jugador1Resultado . ' puntos.</b><br>';
         echo '<b>' . $jugador2 . '</b>' . ' ha sacado ' . '<b>' . $jugador2Resultado . ' puntos.</b><br>';
         echo '<br>✨';

@@ -16,5 +16,6 @@
     <?php
     include_once('includes/cabecera.inc.php');
     ?>
+    <div class="portada"><img src="img/foto_baraja.jpg" alt="Foto_De_Baraja"></div>
 </body>
 </html>
