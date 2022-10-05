@@ -1,5 +1,5 @@
 <header>
-    <h2>Ángel Torada González</h2>
+<h2>Ángel Torada González</h2>
     <nav>
     <ul>
         <li><a href="/index.php">Inicio</a></li>

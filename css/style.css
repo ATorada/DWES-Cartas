@@ -16,10 +16,23 @@ main {
     border-radius: 100px;
 }
 
+header {
+    text-align: center;
+    margin-top: 2%;
+}
+
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.3em;
+}
 
 .imagen > img {
-    width: 100px;
-    height: 120px;
+    width: 90px;
+    height: 100px;
     min-width: 10px;
     min-height: 10px;
 }
@@ -31,19 +44,53 @@ main {
 .contenedor {
     display: flex;
     justify-content: center;
+    flex-direction: row;
+}
+
+.contenedorJugador {
+    margin: 1%;
+    padding: 1%;
+    border: 2px rgb(167, 67, 233) solid;
+    border-radius: 50px;
+    background-color: rgb(252, 246, 255);
+}
+
+.contenedorCartas {
+    display: flex;
+    justify-content: center;
     align-items: center;
     margin: 1%;
-    border: 1px black solid;
-    width: auto;
-    height: auto;
+}
+
+@media (max-width: 1000px) {
+    .contenedor {
+      flex-direction: column;
+    }
+  }
+
+
+.ganadora, .empate, .pierde {
+    font-weight: bold;
 }
 
 .ganadora {
-    border: 5px greenyellow solid;
+    color: rgb(127, 204, 11);
+}
+
+div.ganadora {
+    border: 5px rgb(157, 255, 173) solid;
 }
 
 .empate {
-    border: 5px blue solid;
+    color: blue;
+}
+
+div.empate {
+    border: 5px rgb(152, 152, 255) solid;
+}
+
+.pierde {
+    color: red;
 }
 
 ul {
@@ -55,11 +102,23 @@ ul {
 
 li {
     display: inline;
-    float: left;
-  }
+}
 
-a {
-    display: block;
-    padding: 8px;
-    background-color: #dddddd;
-  }
+nav a {
+    display: inline-flex;
+    position: relative;
+    padding: 10px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    color: rgb(65, 35, 112);
+    border: 2px solid rgb(167, 67, 233);
+    background-color: rgb(245, 194, 255);
+}
+
+nav a:hover {
+    color: rgb(73, 18, 121);
+    border: 2px solid rgb(0, 0, 0);
+    background-color: rgb(249, 221, 255);
+}

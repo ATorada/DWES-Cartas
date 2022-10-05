@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Principal</h1>
+    <h1>✨ Principal ✨</h1>
     <?php
     include_once('includes/cabecera.inc.php');
     ?>
